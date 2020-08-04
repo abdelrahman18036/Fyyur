@@ -1,19 +1,9 @@
-"""
-Contains WTFforms with fields and their respective validation logic
-"""
-
 from datetime import datetime
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, SelectMultipleField, DateTimeField
-from wtforms.validators import DataRequired, AnyOf, URL
+from wtforms.validators import DataRequired, AnyOf, URL, Optional
 
-class ShowForm(Form):
-    """
-    Form to create and edit new Shows.
-    Corresponding HTML: 
-        - templates/forms/new_show.html
-        - templates/forms/edit_show.html
-    """
+class ShowForm(FlaskForm):
     artist_id = StringField(
         'artist_id'
     )
@@ -26,13 +16,7 @@ class ShowForm(Form):
         default= datetime.today()
     )
 
-class VenueForm(Form):
-    """
-    Form to create and edit new Venues.
-    Corresponding HTML: 
-        - templates/forms/new_venue.html
-        - templates/forms/edit_venue.html
-    """
+class VenueForm(FlaskForm):
     name = StringField(
         'name', validators=[DataRequired()]
     )
@@ -40,8 +24,7 @@ class VenueForm(Form):
         'city', validators=[DataRequired()]
     )
     state = SelectField(
-        'state', 
-        validators=[DataRequired()],
+        'state', validators=[DataRequired()],
         choices=[
             ('AL', 'AL'),
             ('AK', 'AK'),
@@ -100,14 +83,26 @@ class VenueForm(Form):
         'address', validators=[DataRequired()]
     )
     phone = StringField(
-        'phone'
+        'phone', validators=[DataRequired()]
     )
     image_link = StringField(
-        'image_link'
+        'image_link', validators=[Optional(), URL()]    # Can chain these
+    )
+    website = StringField(
+        'website', validators=[Optional(), URL()]
+    )
+    seeking_talent = SelectField(
+        'seeking_talent', validators=[DataRequired()],
+        choices=[
+            ('Yes', 'Yes'),
+            ('No', 'No')
+        ]
+    )
+    seeking_description = StringField(
+        'seeking_description', validators=[Optional()]
     )
     genres = SelectMultipleField(
-        'genres', 
-        validators=[DataRequired()],
+        'genres', validators=[DataRequired()],
         choices=[
             ('Alternative', 'Alternative'),
             ('Blues', 'Blues'),
@@ -131,16 +126,10 @@ class VenueForm(Form):
         ]
     )
     facebook_link = StringField(
-        'facebook_link', validators=[URL()]
+        'facebook_link', validators=[Optional(), URL()]
     )
 
-class ArtistForm(Form):
-    """
-    Form to create and edit new Artists.
-    Corresponding HTML: 
-        - templates/forms/new_artist.html
-        - templates/forms/edit_artist.html
-    """
+class ArtistForm(FlaskForm):
     name = StringField(
         'name', validators=[DataRequired()]
     )
@@ -204,14 +193,26 @@ class ArtistForm(Form):
         ]
     )
     phone = StringField(
-        'phone'
+        'phone', validators=[DataRequired()]
     )
     image_link = StringField(
-        'image_link'
+        'image_link', validators=[Optional(), URL()]    # Can chain these
+    )
+    website = StringField(
+        'website', validators=[Optional(), URL()]
+    )
+    seeking_venue = SelectField(
+        'seeking_venue', validators=[DataRequired()],
+        choices=[
+            ('Yes', 'Yes'),
+            ('No', 'No')
+        ]
+    )
+    seeking_description = StringField(
+        'seeking_description', validators=[Optional()]
     )
     genres = SelectMultipleField(
-        'genres', 
-        validators=[DataRequired()],
+        'genres', validators=[DataRequired()],
         choices=[
             ('Alternative', 'Alternative'),
             ('Blues', 'Blues'),
@@ -235,7 +236,5 @@ class ArtistForm(Form):
         ]
     )
     facebook_link = StringField(
-        'facebook_link', 
-        validators=[URL()]
+        'facebook_link', validators=[Optional(), URL()]    # Can chain these
     )
-

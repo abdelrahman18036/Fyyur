@@ -92,7 +92,7 @@
       {% with messages = get_flashed_messages() %}
         {% if messages %}
           {% for message in messages %}
-            <div class="alert alert-block alert-{{flashType}} fade in">
+            <div class="alert alert-block alert-info fade in">
               <a class="close" data-dismiss="alert">&times;</a>
               {{ message }}
             </div>
@@ -117,24 +117,6 @@
   <script>window.jQuery || document.write('<script type="text/javascript" src="/static/js/libs/jquery-1.11.1.min.js"><\/script>')</script>
   <script type="text/javascript" src="/static/js/libs/bootstrap-3.1.1.min.js" defer></script>
   <script type="text/javascript" src="/static/js/plugins.js" defer></script>
-  <script>
-  const deleteVanueBtn = document.getElementById("delete_venue");
-  deleteVanueBtn.onclick =
-      function (e) {
-        const venueid = e.target.dataset["id"];
-          fetch('/venues/' + venueid , {
-          method: 'DELETE'
-          })
-        .then(response => response.json())
-        .then(jsonResponse => {
-          if(jsonResponse['success']){
-            window.location.href = '/'
-          } else {
-            alert('Venue could not be deleted. There are still Shows');
-          }
-        })
-      }
 
-  </script>
 </body>
 </html>
